@@ -1,0 +1,23 @@
+name: gridpathlifting
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+  - numpy
+  - scipy
+  - matplotlib
+  - scikit-learn
+  - tqdm
+  - pandas
+  - seaborn
+  - numba
+  - h5py
+  - opencv
+  - pip
+  - pip:
+    - ripser
+    - persim
+    - dreimac
+    - gudhi
