@@ -1,0 +1,76 @@
+tempCodeRunnerFile.*
+.mypy_cache
+.DS_Store
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyi
+*.pyz
+*.pyw
+*.pyz
+*.pywz
+
+# Virtual environments
+venv/
+env/
+env.bak/
+env1/
+env2/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# Compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# Miscellaneous
+*.bak
+*.swp
+*.swo
+*.tmp
+*.tmp.*
+*~
+*.bak
+*.swp
+*.swo
+*.tmp
+*.tmp.*
+*~
+
+Toroidal_topology_grid_cell_data
+simulation_result.*
+toroidal_coords*.npz
+
+noisy_data_test/noisy/*.csv
+noisy_data_test/noisy/*.json
+affine_transform/random_walk_1holes.pkl
+
+data_1d_test/*_buildup_track
+
+ROOT_PATH.py
+.cache
+
+Wen_et_al_data
+archive/example_placefields_2holes
+
+.ipynb_checkpoints
+*-checkpoint*
+
+nohup.out
+is_conjunctive_all.npz
