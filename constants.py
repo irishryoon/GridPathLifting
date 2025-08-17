@@ -44,5 +44,7 @@ if __name__ == '__main__':
             print(f'Missing directory: {path}')
             missing_dirs.append(path)
     if missing_dirs and input('Create missing directories? (y/n): ') == 'y':
+        print("Creating missing directories...")
         for path in missing_dirs:
             os.makedirs(path)
+        print("done")
