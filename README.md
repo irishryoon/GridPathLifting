@@ -11,7 +11,6 @@ This project aims to decode trajectories from spike train data of grid cells usi
   - [Components](#components)
     - [Trajectory simulation](#trajectory-simulation)
     - [Grid cell simulation](#grid-cell-simulation)
-    - [Place cell simulation (deprecated)](#place-cell-simulation-deprecated)
     - [Persistent homology](#persistent-homology)
     - [Toroidal coordinates](#toroidal-coordinates)
     - [Lifting algorithm](#lifting-algorithm)
@@ -60,12 +59,6 @@ Random walk in an enclosed space is simulated in `trajectory.py`. The world can 
 
 Grid cell simulation is adopted from *Gardner et al., 2022*. Grid cells are simulated in `grid_cell_simulation.py` using a continuous attractor network (CAN) model. `utils.py` contains helper functions from the original studies.
 
-*`Grid.py` is deprecated for an alternative simulation of grid cells.*
-
-### Place cell simulation (deprecated)
-
-In `place_cell_simulation.py`, the place cell simulation is implemented by generating firing rates based on randomized place fields. The activities are fitted with bivariate distribution based on the simulated trajectory, executed with `build_place_spike_train`.
-
 ### Persistent homology
 
 The persistence homology is computed in `persistence_homology.py`. For large data like grid cell spike trian, use `persistence_analysis` that computes with distance matrix. For direct computation of the trajectories, use `trajectory_persistence_analysis`. The persistent homology is computed with `ripser` package.
@@ -107,7 +100,7 @@ To test the robustness of this pipeline, we added noise to the simulated grid ce
 
 ### 1D Data Test
 
-The lifting algorithm is tested on 1D data in [`data_1d_test/`](data_1d_test/) folder using grid cell data from Wen et al. (2024). The data is collected in a wheel running experiment. `Wen_1d_data_test.ipynb` applies the pipeline to the 1D data and successfully recovers the 1D trajectory.
+The lifting algorithm is tested on 1D data in [`Wen_data_test/`](Wen_data_test/) folder and [`Campbell_data_test/`](Campbell_data_test/) using grid cell data from Wen et al. (2024) and Campbell et al. (2021). The data is collected in a wheel running experiment.  Both `Wen_1d_data_test.ipynb` and `Campbell_1d_data_test.ipynb` apply the pipeline to the 1D data and successfully recovers the 1D trajectory.
 
 ### Gardner Data Test
 
@@ -122,3 +115,4 @@ The lifting algorithm is tested on 2D trajectory grid cell data in [`Gardner_dat
 
 - Gardner, R. J., Hermansen, E., Pachitariu, M., Burak, Y., Baas, N. A., Dunn, B. A., ... & Moser, E. I. (2022). Toroidal topology of population activity in grid cells. *Nature, 602*(7895), 123-128.
 - Wen, J. H., Sorscher, B., Aery Jones, E. A., Ganguli, S., & Giocomo, L. M. (2024). One-shot entorhinal maps enable flexible navigation in novel environments. *Nature, 635*(8040), 943-950.
+- Campbell, M. G., Attinger, A., Ocko, S. A., Ganguli, S., & Giocomo, L. M. (2021). Distance-tuned neurons drive specialized path integration calculations in medial entorhinal cortex. Cell reports, 36(10).
