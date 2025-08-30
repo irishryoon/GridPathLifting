@@ -4,7 +4,7 @@ This project aims to decode trajectories from spike train data of grid cells usi
 
 ## Table of Contents
 
-- [GridCellDecoding](#gridcelldecoding)
+- [GridCellLifting](#gridcelllifting)
   - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
     - [Environment Installation](#environment-installation)
