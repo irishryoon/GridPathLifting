@@ -1,4 +1,4 @@
-# GridCellDecoding
+# GridCellLifting
 
 This project aims to decode trajectories from spike train data of grid cells using topological data analysis (TDA) methods. It includes complete pipeline for decoding the data and implemented validations on both simulated and experimental data.
 
