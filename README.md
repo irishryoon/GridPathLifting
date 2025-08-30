@@ -34,18 +34,18 @@ The paths for accessing data and the figures are stored in `constants.py`. Befor
 DATA_ROOT = '.'
 REPO_PATH = '.'
 ```
-  
+
 ### Environment Installation
-  
+
 This project uses Conda for environment management. To install the required dependencies, run:
-  
+
 ```bash
 conda env create -f requirements.yml
 conda activate gridpathlifting
 ```
-  
+
 If the environment already exists and you need to update it, run:
-  
+
 ```bash
 conda env update --file requirements.yml
 ```
@@ -99,7 +99,7 @@ In [`affine_transformation/`](affine_transformation/) folder, `get_transform_mat
 
 ### Noise-adding simulation
 
-To test the robustness of this pipeline, we added noise to the simulated grid cell activity. In `add_noise.py`, we added Gaussian noise to the grid cell activity to simulate spontaneous neural firing. Testing is implemented in [`noisy_data_test/`](noisy_data_test/) folder. The noise is added to the grid cell activity with a different parameters, and the lifting algorithm is applied to the noisy data.
+To test the robustness of this pipeline, we added noise to the simulated grid cell activity. In `add_noise.py` in [`noisy_data_test/`](noisy_data_test/) folder, we added Gaussian noise to the grid cell activity to simulate spontaneous neural firing. Testing is also implemented in the folder. The noise is added to the grid cell activity with a different parameters, and the lifting algorithm is applied to the noisy data.
 
 ### Lifting error cases
 
