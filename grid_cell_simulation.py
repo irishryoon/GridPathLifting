@@ -196,17 +196,6 @@ def grid_fields_decoding_simulation(holes=None):
 
     pickle.dump(nodes1, open(f'{save_dir}/simulation_result.pkl', 'wb'))
 
-def visualize_main():
-    from place_cell_simulation import visualize_place_fields
-    for i in range(3):
-        save_path = os.path.join(GRID_FIELDS_PATH, f'world_{i}holes')
-        trajectory, world = pickle.load(open(os.path.join(TRAJ_PATH, f"random_walk_{i}holes.pkl"), "rb"))
-        trajectory = preprocess(trajectory, world.step_size)
-        result_path = os.path.join(GRID_FIELDS_PATH, f'world_{i}holes', 'simulation_result.pkl')
-        spike_trains = pickle.load(open(result_path, 'rb'))
-        visualize_place_fields(trajectory, spike_trains, save_path)
-
 if __name__ == '__main__':
     for holes in [None, [(20, 20, 40, 40), (60, 60, 80, 80)], [(30, 30, 70, 70)]]:
         grid_fields_decoding_simulation(holes=holes)
-    visualize_main()
