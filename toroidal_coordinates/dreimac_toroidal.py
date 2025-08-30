@@ -7,7 +7,7 @@ from dreimac import CircularCoords # type: ignore
 sys.path.append(".")
 from trajectory import World
 from toroidal_coordinates.compute_coord import interp_arr, visualize_tor_coords_x_traj
-from add_noise import add_noise_1d
+from noisy_data_test.add_noise import add_noise_1d
 from constants import GRID_FIELDS_PATH, TRAJ_PATH, GRID_FIG_PATH
 
 def compute_toroidal_coords_dreimac(grid_rates: np.ndarray, standard_range: bool=True, distance_matrix: bool=False) -> tuple[np.ndarray, np.ndarray]:

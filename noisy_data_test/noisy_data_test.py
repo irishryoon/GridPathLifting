@@ -7,7 +7,7 @@ import ripser # type: ignore
 
 sys.path.append(".")
 from trajectory import World
-from add_noise import add_noise_2d_parallel
+from noisy_data_test.add_noise import add_noise_2d_parallel
 from persistence_homology import persistence_analysis_spikes
 from toroidal_coordinates.dreimac_toroidal import compute_toroidal_coords_dreimac
 from toroidal_coordinates.Gardner_toroidal import Gardner_coord, Gardner_persistence
