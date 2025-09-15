@@ -19,6 +19,8 @@ NOISY_DATA_FIG_PATH = os.path.join(REPO_PATH, 'noisy_data_test', 'noisy')
 WEN_DATA_PATH = os.path.join(DATA_ROOT, 'Wen_et_al_data')
 WEN_DATA_FIG_PATH = os.path.join(REPO_PATH, 'data_1d_test', 'figures')
 
+GIOCOMO_DATA_PATH = os.path.join(DATA_ROOT, 'Giocomo_et_al_data')
+
 AFFINE_TRANSFORM_PATH = os.path.join(DATA_ROOT, 'affine_transform')
 AFFINE_TRANSFORM_FIG_PATH = os.path.join(REPO_PATH, 'affine_transform')
 
