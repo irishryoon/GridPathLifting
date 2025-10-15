@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA # type: ignore
 import sklearn.preprocessing # type: ignore
 
 sys.path.append('.')
-from Gardner_data_test.utils import (
+from Gardner_data_test.Gardner_utils import (
     sample_denoising,
     smooth_knn_dist,
     compute_membership_strengths,

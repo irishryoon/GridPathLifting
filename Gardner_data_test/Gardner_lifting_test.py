@@ -10,7 +10,7 @@ from toroidal_coordinates.toroidal_lifting import toroidal_lifting_distance_upgr
 from toroidal_coordinates.Gardner_toroidal import Gardner_coord
 from toroidal_coordinates.dreimac_toroidal import compute_toroidal_coords_dreimac
 from toroidal_coordinates.compute_coord import visualize_tor_coords_x_traj, interp_arr
-from Gardner_data_test.utils import get_spikes, fit_para, toroidal_alignment, plot_barcode, get_ratemaps
+from Gardner_data_test.Gardner_utils import get_spikes, fit_para, toroidal_alignment, plot_barcode, get_ratemaps
 from persistence_homology import computeDistanceMatrix
 from toroidal_coordinates.epsilon import compute_epsilon
 from constants import GARDNER_DATA_PATH
