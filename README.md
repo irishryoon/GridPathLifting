@@ -51,6 +51,8 @@ conda env update --file requirements.yml
 
 ## Components
 
+`pipeline.py` is provided for pipeline decoding of the grid cell activity.
+
 ### Trajectory simulation
 
 Random walk in an enclosed space is simulated in `trajectory.py`. The world can be configured with size (100*100 by default) and number of holes, inputted with `(LL_x, LL_y, UR_x, UR_y)` coordinates of the holes as a list. The simulated trajactory will be saved as `(trajectory, world)`.
@@ -84,11 +86,11 @@ Three versions of the lifting algorithm are implemented:
 
 Our study offers a method to determine the proper *epsilon* value for the lifting algorithm. In `epsilon.py`, the *epsilon* value is computed to include the majority of the points that potentially needs to be lifted. more details are explained in the paper.
 
-### Affine transformation & Mismatch score
+### Affine transformation & Reconstruction error
 
 In [`affine_transformation/`](affine_transformation/) folder, `get_transform_mat.py` computes the affine transformation matrix between two paths using `estimateAffine2D` function from the OpenCV package. The affine transformation is used to align the lifted path with the original trajectory.
 
-`score_mismatch.py` computes the mismatch score between two paths and is used to evaluate the performance of the lifting algorithm. The mismatch score is defined as the average Euclidean distance between the two paths, normalized by the size of the world. If not specified, the world size is computed as the maximum horizontal/vertical distance of path2.
+`score_mismatch.py` computes the reconstruction error between two paths and is used to evaluate the performance of the lifting algorithm. The reconstruction error is defined as the mean Euclidean distance between the two paths, normalized by the size of the world. If not specified, the world size is computed as the maximum horizontal/vertical distance of path2.
 
 ### Noise-adding simulation
 
