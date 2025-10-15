@@ -76,7 +76,7 @@ def compare_lifted_pipeline(
     lifted_coord_transformed = apply_transform_mat(lifted_coord, transform_mat)
 
     score = score_mismatch(lifted_coord_transformed, original_coord)
-    print(f"Mismatch score: {score}")
+    print(f"Reconstruction Error: {score:.4%}")
     
     return lifted_coord_transformed, score
 
