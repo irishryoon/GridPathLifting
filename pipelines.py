@@ -20,16 +20,18 @@ def recover_traj_pipeline(grid_activity: np.ndarray) -> tuple[np.ndarray, np.nda
     """
     Recovers trajectory coordinates from grid cell activity using toroidal coordinate transformation and lifting.
     Args:
-        grid_activity (np.ndarray): Array representing grid cell activity over time. Activity should be in the shape (n_cells, n_time_steps).
+        grid_activity (np.ndarray): Array representing grid cell activity over time. Activity should be in the shape (n_time_bins, n_neurons).
+
     Returns:
         tor_coord (np.ndarray): The toroidal coordinates recovered from the grid activity.
         lifted_coord (np.ndarray): The lifted coordinates obtained by applying a distance upgrade to the toroidal coordinates.
     """
     try:
-        tor_coord, times = compute_toroidal_coords_dreimac(grid_activity.T)
+        tor_coord, times = compute_toroidal_coords_dreimac(grid_activity)
     except:
         print("DREiMac failed")
-        tor_coord, times, _, _ = Gardner_coord(grid_activity.T)
+        tor_coord, times, _, _ = Gardner_coord(grid_activity)
+
     lifted_coord = toroidal_lifting_distance_upgrade(tor_coord)
     
     return tor_coord, lifted_coord
@@ -61,7 +63,8 @@ def plot_recovered_trajectory(lifted_coord: np.ndarray, save_path: str | None = 
 
 def compare_lifted_pipeline(
     lifted_coord: np.ndarray,
-    original_coord: np.ndarray
+    original_coord: np.ndarray,
+    world_size: float | None = None
 ) -> tuple[np.ndarray, float]:
     """
     Compares lifted coordinates to original coordinates by applying a transformation and scoring the mismatch.
@@ -70,20 +73,19 @@ def compare_lifted_pipeline(
         original_coord (np.ndarray): The reference coordinates for comparison. Should be in the shape (n2_time_steps, 2).
     Returns:
         lifted_coord_transformed (np.ndarray): The transformed lifted coordinates.
-        score (float): The mismatch score between the transformed lifted coordinates and the original coordinates.
+        error (float): The reconstruction error between the transformed lifted coordinates and the original coordinates.
     """
     transform_mat = get_transform_mat(lifted_coord, original_coord)
     lifted_coord_transformed = apply_transform_mat(lifted_coord, transform_mat)
 
-    score = score_mismatch(lifted_coord_transformed, original_coord)
-    print(f"Reconstruction Error: {score:.4%}")
+    error = score_mismatch(lifted_coord_transformed, original_coord, world_size)
     
-    return lifted_coord_transformed, score
+    return lifted_coord_transformed, error
 
 def plot_trajectory_comparison(
     original_coord: np.ndarray,
     lifted_coord_transformed: np.ndarray,
-    score: float,
+    error: float,
     save_path: str | None = None
 ):
     """
@@ -118,7 +120,7 @@ def plot_trajectory_comparison(
                 c='#1a80bb', s=1, alpha=0.05, label='Original')
     ax3.scatter(lifted_coord_transformed[:, 0], lifted_coord_transformed[:, 1], 
                 c='#ea801c', s=1, alpha=0.05, label='Transformed Lifted')
-    ax3.set_title(f'Mismatch Score: {score:.6f}')
+    ax3.set_title(f'Reconstruction Error: {error:.6f}')
     ax3.set_xlabel('X')
     ax3.set_ylabel('Y')
     ax3.legend()
@@ -135,17 +137,20 @@ def plot_trajectory_comparison(
 
 if __name__ == "__main__":
     from constants import GRID_FIELDS_PATH, TRAJ_PATH
-    grid_activity = pickle.load(open(os.path.join(GRID_FIELDS_PATH, 'world_1holes', 'simulation_result.pkl'), 'rb')) # Grid cell activity
+    grid_activity = pickle.load(open(os.path.join(GRID_FIELDS_PATH, 'world_1holes', 'simulation_result.pkl'), 'rb')).T # Grid cell activity (n_time_bins, n_neurons)
     print(f"Grid activity shape: {grid_activity.shape}")
+    
+    # Recover trajectory from grid activity
     tor_coord, lifted_coord = recover_traj_pipeline(grid_activity)
     print(lifted_coord.shape)
 
     # Plot recovered trajectory
     plot_recovered_trajectory(lifted_coord)
 
+    # Compare with original trajectory and compute reconstruction error
     original_coord, _ = pickle.load(open(os.path.join(TRAJ_PATH, 'random_walk_1holes.pkl'), 'rb')) # Original trajectory
-    lifted_coord_transformed, score = compare_lifted_pipeline(lifted_coord, original_coord)
-    print(f'{score:}')
-    
+    lifted_coord_transformed, error = compare_lifted_pipeline(lifted_coord, original_coord, world_size=100)
+    print(f'Reconstruction Error: {error:.4%}')
+
     # Plot trajectory comparison
-    plot_trajectory_comparison(original_coord, lifted_coord_transformed, score)
+    plot_trajectory_comparison(original_coord, lifted_coord_transformed, error)
