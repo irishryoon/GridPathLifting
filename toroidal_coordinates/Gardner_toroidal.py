@@ -7,7 +7,7 @@ from scipy.spatial.distance import pdist, squareform # type: ignore
 from scipy.sparse import coo_matrix # type: ignore
 
 sys.path.append('.')
-from Gardner_data_test.utils import *
+from Gardner_data_test.Gardner_utils import *
 from distance_computation import preprocess_Gardner, preprocess
 from constants import GARDNER_DATA_PATH
 

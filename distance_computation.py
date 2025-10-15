@@ -14,7 +14,7 @@ from scipy.signal import correlate
 
 sys.path.append(".")
 from trajectory import World # need for loading trajectories
-from Gardner_data_test.utils import (
+from Gardner_data_test.Gardner_utils import (
     sample_denoising,
     smooth_knn_dist,
     compute_membership_strengths,
