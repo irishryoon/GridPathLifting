@@ -213,7 +213,6 @@ def smooth_knn_dist(distances, k, n_iter=64, local_connectivity=0.0, bandwidth=1
         hi = np.inf
         mid = 1.0
 
-        # TODO: This is very inefficient, but will do for now. FIXME
         ith_distances = distances[i]
         non_zero_dists = ith_distances[ith_distances > 0.0]
         if non_zero_dists.shape[0] >= local_connectivity:
