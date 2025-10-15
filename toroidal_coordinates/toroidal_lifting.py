@@ -102,12 +102,6 @@ def toroidal_lifting(cir_coords: np.ndarray) -> np.ndarray:
             cir_coords[cover_timestamps[idx-1][1]:, 0] -= 2*np.pi
         prev_cover = (ii, jj)
     
-    
-    # if __name__ == '__main__':
-    #     plt.figure()
-    #     plt.plot(cir_coords[:, 0], cir_coords[:, 1])
-    #     pickle.dump(cir_coords, open(os.path.join(GRID_FIELDS_PATH, f"world_{num_holes}holes", "toroidal_coords_lifted.pkl"), "wb"))
-    
     return cir_coords
 
 def toroidal_lifting_distance(cir_coords: np.ndarray, epsilon: float | None = None, plot: bool = False) -> np.ndarray:
@@ -124,27 +118,6 @@ def toroidal_lifting_distance(cir_coords: np.ndarray, epsilon: float | None = No
         EPSILON = compute_epsilon(cir_coords, plot=plot)
     else:
         EPSILON = epsilon
-    # import pdb; pdb.set_trace()
-    # EPSILON = 0.1
-    
-    ### Original version of the algorithm with O(T^2) complexity
-    # cir_coords = cir_coords.copy()
-    
-    # DISTANCE_THRESHOLD = 2 * np.pi - EPSILON
-    # for i in range(1, cir_coords.shape[0]):
-    #     for j in range(2):
-    #         if cir_coords[i, j] - cir_coords[i-1, j] > DISTANCE_THRESHOLD:
-    #             cir_coords[i:, j] -= 2*np.pi
-    #         elif cir_coords[i, j] - cir_coords[i-1, j] < -DISTANCE_THRESHOLD:
-    #             cir_coords[i:, j] += 2*np.pi
-        # if cir_coords[i, 0] - cir_coords[i-1, 0] > DISTANCE_THRESHOLD:
-        #     cir_coords[i:, 0] -= 2*np.pi
-        # elif cir_coords[i, 0] - cir_coords[i-1, 0] < -DISTANCE_THRESHOLD:
-        #     cir_coords[i:, 0] += 2*np.pi
-        # if cir_coords[i, 1] - cir_coords[i-1, 1] > DISTANCE_THRESHOLD:
-        #     cir_coords[i:, 1] -= 2*np.pi
-        # elif cir_coords[i, 1] - cir_coords[i-1, 1] < -DISTANCE_THRESHOLD:
-        #     cir_coords[i:, 1] += 2*np.pi
     
     ref_coords = cir_coords.copy()
     cir_coords = cir_coords.copy()
@@ -165,8 +138,6 @@ def toroidal_lifting_distance(cir_coords: np.ndarray, epsilon: float | None = No
         plt.figure()
         plt.plot(cir_coords[:, 0], cir_coords[:, 1])
         plt.savefig(os.path.join(GRID_FIG_PATH, f"world_{num_holes}holes", "toroidal_coords_lifted.png"), dpi=300)
-        
-    #     pickle.dump(cir_coords, open(os.path.join(GRID_FIELDS_PATH, f"world_{num_holes}holes", "toroidal_coords_lifted.pkl"), "wb"))
     
     return cir_coords
 

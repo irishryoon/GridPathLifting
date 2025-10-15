@@ -68,13 +68,6 @@ def compute_toroidal_coords_world_with_noise(num_holes: int = 1) -> None:
                     dgm2=persistence['dgms'][2]
                 )
                 np.savetxt(os.path.join(noise_path, f"toroidal_coords{name}.csv"), lifted_coords, delimiter=",")
-                ### lifted trajectory, persistence diagram (0,1)
-                # np.savez_compressed(
-                #     os.path.join(noise_path, f"toroidal_coords{f'_portion{portion}_variance{variance}'}.npz"),
-                #     coords=coords,
-                #     times=times,
-                #     traj=traj,
-                # )
                 plt.figure(figsize=(12, 6))
                 plt.subplot(1, 2, 1)
                 plt.plot(traj[:, 0], traj[:, 1])

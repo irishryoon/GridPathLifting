@@ -33,14 +33,6 @@ def compute_epsilon(cir_coords: np.ndarray, alpha: float = 0.99, num_bins: int =
     hist = hist[::-1][:-int(num_bins*fit_range)]
     bin_edges = bin_edges[:-int(num_bins*fit_range)]
     bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
-    
-    # params, covariance = curve_fit(exponential, bin_centers, hist, p0=(1, 1, 1))
-    
-    # y_fitted = exponential(bin_centers, *params)
-    # hist = hist / np.max(y_fitted)
-    # y_fitted = y_fitted / np.max(y_fitted)
-    # y_fitted[y_fitted < 0] = 0
-    # y_fitted[y_fitted < 3e-4] = 0
     cdf = np.cumsum(hist) / np.sum(hist)
     hist = hist / np.max(hist)
     

@@ -191,6 +191,15 @@ def random_walk(time: int, world: World, save: bool = True, no_warnings: bool = 
 
 
 def visualize_trajectory(world: World, trace: np.ndarray, save: bool = True, show: bool = True):
+    """
+    Visualizes a trajectory path in a 2D world.
+
+    Args:
+        world (World): World object with size and holes attributes.
+        trace (np.ndarray): Array of shape (n, 2) with [y, x] coordinates.
+        save (bool): If True, saves plot to TRAJ_PATH. Default is True.
+        show (bool): If True, displays the plot. Default is True.
+    """
     plt.figure(figsize=(8, 8))
     num_holes = len(world.holes) if world.holes is not None else 0
     plt.xlim(0, world.size[0])

@@ -1,12 +1,11 @@
 """
-This module provides an all-in-one pipeline for recovering the tranjectory of a grid cell activity.
+This module provides an all-in-one pipeline for recovering the trajectory of a grid cell activity.
 """
 
 import os, sys
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
 
 sys.path.append('.')
 from trajectory import World
@@ -136,7 +135,7 @@ def plot_trajectory_comparison(
 
 if __name__ == "__main__":
     from constants import GRID_FIELDS_PATH, TRAJ_PATH
-    grid_activity = pickle.load(open(os.path.join(GRID_FIELDS_PATH, 'world_1holes', 'simulation_result.pkl'), 'rb'))
+    grid_activity = pickle.load(open(os.path.join(GRID_FIELDS_PATH, 'world_1holes', 'simulation_result.pkl'), 'rb')) # Grid cell activity
     print(f"Grid activity shape: {grid_activity.shape}")
     tor_coord, lifted_coord = recover_traj_pipeline(grid_activity)
     print(lifted_coord.shape)
@@ -144,7 +143,7 @@ if __name__ == "__main__":
     # Plot recovered trajectory
     plot_recovered_trajectory(lifted_coord)
 
-    original_coord, _ = pickle.load(open(os.path.join(TRAJ_PATH, 'random_walk_1holes.pkl'), 'rb'))
+    original_coord, _ = pickle.load(open(os.path.join(TRAJ_PATH, 'random_walk_1holes.pkl'), 'rb')) # Original trajectory
     lifted_coord_transformed, score = compare_lifted_pipeline(lifted_coord, original_coord)
     print(f'{score:}')
     
