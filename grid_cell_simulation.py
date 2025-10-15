@@ -180,20 +180,6 @@ def grid_fields_decoding_simulation(holes=None):
     nodes1 = simulation(trace)
 
     save_dir = os.path.join(GRID_FIELDS_PATH, f'world_{len(world.holes) if world.holes is not None else 0}holes')
-    inds = np.random.permutation(Nx * Ny)
-    # for n, i in enumerate(inds[:5]):
-    #     mtot, x_edge, y_edge, circ = binned_statistic_2d(trace[:-1, 0], trace[:-1, 1], nodes1[i], 
-    #         statistic='mean', bins=50, range=None, expand_binnumbers=True)
-    #     plt.figure()
-    #     plt.imshow(mtot, origin='lower')
-    #     plt.title(f'Grid Cell {i}')
-
-    #     if not os.path.exists(save_dir):
-    #         os.makedirs(save_dir)
-    #     plt.savefig(f'{save_dir}/grid_{n}.png')
-
-    # plt.show()
-
     pickle.dump(nodes1, open(f'{save_dir}/simulation_result.pkl', 'wb'))
 
 if __name__ == '__main__':

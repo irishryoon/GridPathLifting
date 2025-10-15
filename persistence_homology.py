@@ -89,10 +89,6 @@ def persistence_analysis(result_path: str, maxdim: int = 2, dim: int = 6):
     """
     spikes = pickle.load(open(result_path, "rb")).T
     persistence = persistence_analysis_spikes(spikes, maxdim=maxdim, dim=dim)
-    # plot_barcode(persistence["dgms"])
-    # plot_diagrams(persistence["dgms"])
-    # plt.title(f"Persistence Diagram for {os.path.basename(result_path)} simulation")
-    # plt.savefig(os.path.join(os.path.dirname(result_path), 'simulation_homology.png'), dpi=300)
     
     return persistence
 
@@ -110,10 +106,6 @@ def trajectory_persistence_analysis(result_path: str, maxdim: int = 1):
         do_cocycles=True,
         distance_matrix=False,
     )
-    # plt.figure()
-    # plot_diagrams(persistence["dgms"])
-    # plt.title(f"Persistence Diagram of toroidal trajectory")
-    # plt.savefig(os.path.join(os.path.dirname(result_path), 'toroidal_trajectory_homology.png'), dpi=300)
     
     return persistence
 

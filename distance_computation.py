@@ -18,7 +18,6 @@ from Gardner_data_test.utils import (
     sample_denoising,
     smooth_knn_dist,
     compute_membership_strengths,
-    plot_barcode,
 )
 
 import matplotlib as mpl

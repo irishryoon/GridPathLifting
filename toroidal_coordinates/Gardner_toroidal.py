@@ -14,14 +14,16 @@ from constants import GARDNER_DATA_PATH
 def Gardner_persistence(sspikes: np.ndarray, maxdim = 1) -> dict:
     """
     Computes the persistent cohomology of the given spike train data using Gardner's method.
-    Parameters:
-    -----------
-    sspikes : np.ndarray
-        A 2D numpy array where each row represents a time point and each column represents a neuron.
+    
+    Args:
+        sspikes : np.ndarray
+            A 2D numpy array where each row represents a time point and each column represents a neuron.
+        maxdim : int, optional
+            The maximum dimension of homology to compute. Default is 1.
+
     Returns:
-    --------
-    dict
-        A dictionary containing the persistence diagrams and cocycles computed by the Ripser library.
+        dict
+            A dictionary containing the persistence diagrams and cocycles computed by the Ripser library.
     """
     dim = 6
     ph_classes = [0,1] # Decode the ith most persistent cohomology class
@@ -79,61 +81,7 @@ def Gardner_coord(sspikes: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarr
         numpy.ndarray: The centcosall matrix.
         numpy.ndarray: The centsinall matrix.
     """
-    # bRoll = False
-    dim = 6
-    ph_classes = [0,1] # Decode the ith most persistent cohomology class
-    num_circ = len(ph_classes)
-    dec_tresh = 0.99
-    metric = 'cosine'
-    maxdim = 1
-    coeff = 47
-    active_times = 15000
-    k = 1000
-    num_times = 5
-    n_points = 1200
-    nbs = 800
-    # sigma = 1500
-            
-    num_neurons = len(sspikes[0,:])
-            
-    times_cube = np.arange(0,len(sspikes[:,0]),num_times)
-    movetimes = np.sort(np.argsort(np.sum(sspikes[times_cube,:],1))[-active_times:])
-    movetimes = times_cube[movetimes]
-
-    dim_red_spikes_move_scaled,__,__ = pca(preprocessing.scale(sspikes[movetimes,:]), dim = dim)
-    indstemp,dd,fs  = sample_denoising(dim_red_spikes_move_scaled,  k, 
-                                        n_points, 1, metric)
-    dim_red_spikes_move_scaled = dim_red_spikes_move_scaled[indstemp,:]
-    X = squareform(pdist(dim_red_spikes_move_scaled, metric))
-    knn_indices = np.argsort(X)[:, :nbs]
-    knn_dists = X[np.arange(X.shape[0])[:, None], knn_indices].copy()
-    sigmas, rhos = smooth_knn_dist(knn_dists, nbs, local_connectivity=0)
-    rows, cols, vals = compute_membership_strengths(knn_indices, knn_dists, sigmas, rhos)
-    result = coo_matrix((vals, (rows, cols)), shape=(X.shape[0], X.shape[0]))
-    result.eliminate_zeros()
-    transpose = result.transpose()
-    prod_matrix = result.multiply(transpose)
-    result = (result + transpose - prod_matrix)
-    result.eliminate_zeros()
-    d = result.toarray()
-    d = -np.log(d)
-    np.fill_diagonal(d,0)
-
-    persistence = ripser(d, maxdim=maxdim, coeff=coeff, do_cocycles= True, distance_matrix = True)    
-    # plot_barcode(persistence['dgms'])    
-    # if len(day_name)>0:
-    #     day_name = '_' + day_name
-    # print(rat_name + '_' + mod_name + '_' + sess_name + day_name )
-    # plt.show()
-    
-    # try:
-    #     os.mkdir(folder + 'Results')
-    # except:
-    #     print('Results directory already created')
-    # np.savez_compressed(folder + 'Results//' + 
-    #     rat_name + '_' + mod_name + '_' + sess_name + day_name  + '_persistence', 
-    #     persistence = persistence, indstemp = indstemp,  movetimes = movetimes)
-    # day_name = day_name[1:]
+    persistence = Gardner_persistence(sspikes)
     
     ############ Decode cocycles ################
     diagrams = persistence["dgms"] # the multiset describing the lives of the persistence classes
@@ -179,15 +127,6 @@ def Gardner_coord(sspikes: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarr
     coordsbox = coords.copy()
     times_box = times.copy()
 
-    # if len(day_name)>0:
-    #     day_name = '_' + day_name
-    # np.savez_compressed(folder + 'Results//' + 
-    #                     rat_name + '_' + mod_name + '_' + sess_name + day_name  + '_decoding', 
-    #                     coords = coords, coordsbox = coordsbox,  times = times, 
-    #                     times_box = times_box, centcosall = centcosall, centsinall = centsinall)
-    
-    
-    # np.savez_compressed('coords.npz', coords=coordsbox, times=times_box, xx=xx, yy=yy, centcosall=centcosall, centsinall=centsinall)
     return coordsbox, times_box, centcosall, centsinall
 
 if __name__ == '__main__':

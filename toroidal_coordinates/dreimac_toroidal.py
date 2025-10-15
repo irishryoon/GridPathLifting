@@ -37,9 +37,7 @@ def compute_toroidal_coords_world(num_holes: int, noisy_level: float | None = No
     
     if noisy_level:
         grid_rates = add_noise_1d(grid_rates, noisy_level, noisy_variance)
-    
-    # plt.plot(grid_rates[:10000, 0])
-    # plt.show()
+
     
     traj = pickle.load(open(traj_path, "rb"))[0]
     
