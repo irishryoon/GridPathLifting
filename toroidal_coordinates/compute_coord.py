@@ -177,10 +177,10 @@ def plot_toroidal_coordinates(xx: np.ndarray, yy: np.ndarray, coords:np.ndarray,
     # Add a new axis for the colorbar at the computed position.
     cax = fig.add_axes([x_cbar, y_cbar, width_cbar, height_cbar]) # type: ignore
    
-    cbar = fig.colorbar(mpl.cm.ScalarMappable(norm = mpl.colors.Normalize(vmin = 0, vmax = 2 * math.pi), cmap = "plasma"),  # type: ignore
+    cbar = fig.colorbar(mpl.cm.ScalarMappable(norm = mpl.colors.Normalize(vmin = 0, vmax = 2 * math.pi), cmap = "plasma"), 
                         cax=cax, ticks=np.arange(0, 2*math.pi+0.001, math.pi), format=mticker.FixedFormatter(['0', r'$\pi$', r'$2\pi$']))
     
-    cbar.set_ticks(np.arange(0, 2*math.pi+0.001, math.pi)) # type: ignore
+    cbar.set_ticks(np.arange(0, 2*math.pi+0.001, math.pi))
     cbar.ax.tick_params(labelsize=25)
 
 if __name__ == "__main__":

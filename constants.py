@@ -10,16 +10,19 @@ PLACE_FIELDS_PATH = os.path.join(DATA_ROOT, 'place_fields')
 GRID_FIG_PATH = os.path.join(REPO_PATH, 'grid_fields')
 PLACE_FIG_PATH = os.path.join(REPO_PATH, 'place_fields')
 
-GARDNER_DATA_PATH = os.path.join(DATA_ROOT, 'Toroidal_topology_grid_cell_data/')
-GARDNER_CONJUNCTIVE_PATH = os.path.join(DATA_ROOT, 'is_conjunctive_all.npz')
+GARDNER_DATA_PATH = os.path.join(DATA_ROOT, 'Data', 'Gardner_data/')
+GARDNER_CONJUNCTIVE_PATH = os.path.join(GARDNER_DATA_PATH, 'is_conjunctive_all.npz')
 
 NOISY_DATA_PATH = os.path.join(DATA_ROOT, 'noisy_data_test', 'noisy')
 NOISY_DATA_FIG_PATH = os.path.join(REPO_PATH, 'noisy_data_test', 'noisy')
 
-WEN_DATA_PATH = os.path.join(DATA_ROOT, 'Wen_et_al_data')
-WEN_DATA_FIG_PATH = os.path.join(REPO_PATH, 'data_1d_test', 'figures')
+SUBTRACT_GAUSSIAN_DATA_PATH = os.path.join(DATA_ROOT, 'noisy_data_test', 'subtract_gaussian')
+SUBTRACT_GAUSSIAN_FIG_PATH = os.path.join(REPO_PATH, 'noisy_data_test', 'subtract_gaussian')
 
-GIOCOMO_DATA_PATH = os.path.join(DATA_ROOT, 'Giocomo_et_al_data')
+WEN_DATA_PATH = os.path.join(DATA_ROOT, 'Data', 'Wen_et_al_data')
+WEN_DATA_FIG_PATH = os.path.join(REPO_PATH, 'Wen_data_test', 'figures')
+
+GIOMOCO_DATA_PATH = os.path.join(DATA_ROOT, 'Data', 'giomoco_data')
 
 AFFINE_TRANSFORM_PATH = os.path.join(DATA_ROOT, 'affine_transform')
 AFFINE_TRANSFORM_FIG_PATH = os.path.join(REPO_PATH, 'affine_transform')
@@ -46,7 +49,5 @@ if __name__ == '__main__':
             print(f'Missing directory: {path}')
             missing_dirs.append(path)
     if missing_dirs and input('Create missing directories? (y/n): ') == 'y':
-        print("Creating missing directories...")
         for path in missing_dirs:
             os.makedirs(path)
-        print("done")

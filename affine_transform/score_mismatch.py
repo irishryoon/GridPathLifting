@@ -34,6 +34,35 @@ def score_mismatch(path1: np.ndarray, path2: np.ndarray, world_size: float | Non
     return np.mean(np.linalg.norm(path1 - path2, axis=1)) / world_size
 
 
+def segmental_mismatch(
+    lifted: np.ndarray,
+    original: np.ndarray,
+    len_seg: int,
+) -> list[float]:
+    """
+    Computes mismatch scores between lifted and original paths segment by segment.
+
+    Args:
+        lifted: Lifted path as a 2D numpy array (N, 2).
+        original: Original path as a 2D numpy array (N, 2).
+        len_seg: Length of each segment.
+
+    Returns:
+        List of mismatch scores, one per segment.
+    """
+    num_seg = lifted.shape[0] // len_seg
+    mismatch_scores = []
+    for i in range(num_seg):
+        original_seg = original[i * len_seg:(i + 1) * len_seg]
+        lifted_seg = lifted[i * len_seg:(i + 1) * len_seg]
+        if len(lifted_seg) < 4:
+            continue
+        transform_mat = get_transform_mat(lifted_seg, original_seg)
+        recovered_lifted = apply_transform_mat(lifted_seg, transform_mat)
+        mismatch_scores.append(score_mismatch(recovered_lifted, original_seg))
+    return mismatch_scores
+
+
 def compute_mean_transform_mat(all_original_segs: np.ndarray, all_lifted_segs: np.ndarray) -> np.ndarray:
     """
     Computes the mean transformation matrix from a set of original and lifted segments.

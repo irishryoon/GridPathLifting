@@ -7,29 +7,26 @@ from scipy.spatial.distance import pdist, squareform # type: ignore
 from scipy.sparse import coo_matrix # type: ignore
 
 sys.path.append('.')
-from Gardner_data_test.Gardner_utils import *
+from Gardner_data_test.utils import *
 from distance_computation import preprocess_Gardner, preprocess
 from constants import GARDNER_DATA_PATH
 
-def Gardner_persistence(sspikes: np.ndarray, maxdim = 1) -> dict:
+def Gardner_persistence(sspikes: np.ndarray, maxdim: int = 1, metric: str = "cosine") -> dict:
     """
     Computes the persistent cohomology of the given spike train data using Gardner's method.
-    
-    Args:
-        sspikes : np.ndarray
-            A 2D numpy array where each row represents a time point and each column represents a neuron.
-        maxdim : int, optional
-            The maximum dimension of homology to compute. Default is 1.
-
+    Parameters:
+    -----------
+    sspikes : np.ndarray
+        A 2D numpy array where each row represents a time point and each column represents a neuron.
     Returns:
-        dict
-            A dictionary containing the persistence diagrams and cocycles computed by the Ripser library.
+    --------
+    dict
+        A dictionary containing the persistence diagrams and cocycles computed by the Ripser library.
     """
     dim = 6
     ph_classes = [0,1] # Decode the ith most persistent cohomology class
     num_circ = len(ph_classes)
     dec_tresh = 0.99
-    metric = 'cosine'
     maxdim = maxdim
     coeff = 47
     active_times = 15000
@@ -45,10 +42,23 @@ def Gardner_persistence(sspikes: np.ndarray, maxdim = 1) -> dict:
     movetimes = np.sort(np.argsort(np.sum(sspikes[times_cube,:],1))[-active_times:])
     movetimes = times_cube[movetimes]
 
+    # Adapt n_points, k, nbs to available data to avoid empty-sequence errors
+    n_available = len(movetimes)
+    n_points = min(n_points, n_available)
+    k = min(k, n_available - 1)
+    nbs = min(nbs, n_available - 1)
+
+    if n_points < 2:
+        raise ValueError(f"Too few time points after downsampling ({n_available}) to compute toroidal coordinates.")
+
     dim_red_spikes_move_scaled,__,__ = pca(preprocessing.scale(sspikes[movetimes,:]), dim = dim)
-    indstemp,dd,fs  = sample_denoising(dim_red_spikes_move_scaled,  k, 
+    dim_red_spikes_move_scaled = np.asarray(np.real_if_close(dim_red_spikes_move_scaled), dtype=float)
+    indstemp,dd,fs  = sample_denoising(dim_red_spikes_move_scaled,  k,
                                         n_points, 1, metric)
-    dim_red_spikes_move_scaled = dim_red_spikes_move_scaled[indstemp,:]
+    dim_red_spikes_move_scaled = np.asarray(
+        np.real_if_close(dim_red_spikes_move_scaled[indstemp,:]),
+        dtype=float,
+    )
     X = squareform(pdist(dim_red_spikes_move_scaled, metric))
     knn_indices = np.argsort(X)[:, :nbs]
     knn_dists = X[np.arange(X.shape[0])[:, None], knn_indices].copy()
@@ -68,12 +78,17 @@ def Gardner_persistence(sspikes: np.ndarray, maxdim = 1) -> dict:
     
     return persistence
 
-def Gardner_coord(sspikes: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def Gardner_coord(
+    sspikes: np.ndarray,
+    metric: str = "cosine",
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
     Calculates the toroidal coordinates using the Gardner method.
 
     Args:
         sspikes (numpy.ndarray): Spike data matrix of shape (num_times, num_neurons).
+        metric (str): Distance metric used during denoising and kNN graph
+            construction. Typically ``"cosine"`` or ``"euclidean"``.
 
     Returns:
         numpy.ndarray: The toroidal coordinates.
@@ -81,11 +96,12 @@ def Gardner_coord(sspikes: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarr
         numpy.ndarray: The centcosall matrix.
         numpy.ndarray: The centsinall matrix.
     """
+    # bRoll = False
     dim = 6
     ph_classes = [0,1] # Decode the ith most persistent cohomology class
     num_circ = len(ph_classes)
     dec_tresh = 0.99
-    metric = 'cosine'
+    maxdim = 1
     coeff = 47
     active_times = 15000
     k = 1000
@@ -100,10 +116,23 @@ def Gardner_coord(sspikes: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarr
     movetimes = np.sort(np.argsort(np.sum(sspikes[times_cube,:],1))[-active_times:])
     movetimes = times_cube[movetimes]
 
+    # Adapt n_points, k, nbs to available data to avoid empty-sequence errors
+    n_available = len(movetimes)
+    n_points = min(n_points, n_available)
+    k = min(k, n_available - 1)
+    nbs = min(nbs, n_available - 1)
+
+    if n_points < 2:
+        raise ValueError(f"Too few time points after downsampling ({n_available}) to compute toroidal coordinates.")
+
     dim_red_spikes_move_scaled,__,__ = pca(preprocessing.scale(sspikes[movetimes,:]), dim = dim)
-    indstemp,dd,fs  = sample_denoising(dim_red_spikes_move_scaled,  k, 
+    dim_red_spikes_move_scaled = np.asarray(np.real_if_close(dim_red_spikes_move_scaled), dtype=float)
+    indstemp,dd,fs  = sample_denoising(dim_red_spikes_move_scaled,  k,
                                         n_points, 1, metric)
-    dim_red_spikes_move_scaled = dim_red_spikes_move_scaled[indstemp,:]
+    dim_red_spikes_move_scaled = np.asarray(
+        np.real_if_close(dim_red_spikes_move_scaled[indstemp,:]),
+        dtype=float,
+    )
     X = squareform(pdist(dim_red_spikes_move_scaled, metric))
     knn_indices = np.argsort(X)[:, :nbs]
     knn_dists = X[np.arange(X.shape[0])[:, None], knn_indices].copy()
@@ -119,8 +148,22 @@ def Gardner_coord(sspikes: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarr
     d = -np.log(d)
     np.fill_diagonal(d,0)
 
-    persistence = ripser(d, maxdim=2, coeff=coeff, do_cocycles= True, distance_matrix = True)   
-    
+    persistence = ripser(d, maxdim=maxdim, coeff=coeff, do_cocycles= True, distance_matrix = True)
+    # plot_barcode(persistence['dgms'])
+    # if len(day_name)>0:
+    #     day_name = '_' + day_name
+    # print(rat_name + '_' + mod_name + '_' + sess_name + day_name )
+    # plt.show()
+
+    # try:
+    #     os.mkdir(folder + 'Results')
+    # except:
+    #     print('Results directory already created')
+    # np.savez_compressed(folder + 'Results//' +
+    #     rat_name + '_' + mod_name + '_' + sess_name + day_name  + '_persistence',
+    #     persistence = persistence, indstemp = indstemp,  movetimes = movetimes)
+    # day_name = day_name[1:]
+
     ############ Decode cocycles ################
     diagrams = persistence["dgms"] # the multiset describing the lives of the persistence classes
     cocycles = persistence["cocycles"][1] # the cocycle representatives for the 1-dim classes
@@ -134,7 +177,8 @@ def Gardner_coord(sspikes: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarr
     threshold = births1[iMax[-2]] + (deaths1[iMax[-2]] - births1[iMax[-2]])*dec_tresh
     for c in ph_classes:
         cocycle = cocycles[iMax[-(c+1)]]
-        coords1[c,:],inds = get_coords(cocycle, threshold, len(indstemp), dists_land, coeff)
+        f, inds = get_coords(cocycle, threshold, len(indstemp), dists_land, coeff)
+        coords1[c, inds] = f
 
     num_neurons = len(sspikes[0,:])
     centcosall = np.zeros((num_neurons, 2, n_points))
@@ -165,6 +209,15 @@ def Gardner_coord(sspikes: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarr
     coordsbox = coords.copy()
     times_box = times.copy()
 
+    # if len(day_name)>0:
+    #     day_name = '_' + day_name
+    # np.savez_compressed(folder + 'Results//' + 
+    #                     rat_name + '_' + mod_name + '_' + sess_name + day_name  + '_decoding', 
+    #                     coords = coords, coordsbox = coordsbox,  times = times, 
+    #                     times_box = times_box, centcosall = centcosall, centsinall = centsinall)
+    
+    
+    # np.savez_compressed('coords.npz', coords=coordsbox, times=times_box, xx=xx, yy=yy, centcosall=centcosall, centsinall=centsinall)
     return coordsbox, times_box, centcosall, centsinall
 
 if __name__ == '__main__':
@@ -172,8 +225,7 @@ if __name__ == '__main__':
     rat_name, mod_name, sess_name, day_name = ('R', '1', 'OF', 'day2')
     sspikes,xx,yy,__,__ = get_spikes(rat_name, mod_name, day_name, sess_name, bType = 'pure',
                                             bSmooth = True, bSpeed = True, folder = folder )
-    print(sspikes.shape)
-    Gardner_coord(sspikes)
+    # Gardner_coord(sspikes)
     persistence = Gardner_persistence(sspikes)
     import pdb; pdb.set_trace()
     plt.show()

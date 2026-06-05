@@ -191,15 +191,6 @@ def random_walk(time: int, world: World, save: bool = True, no_warnings: bool = 
 
 
 def visualize_trajectory(world: World, trace: np.ndarray, save: bool = True, show: bool = True):
-    """
-    Visualizes a trajectory path in a 2D world.
-
-    Args:
-        world (World): World object with size and holes attributes.
-        trace (np.ndarray): Array of shape (n, 2) with [y, x] coordinates.
-        save (bool): If True, saves plot to TRAJ_PATH. Default is True.
-        show (bool): If True, displays the plot. Default is True.
-    """
     plt.figure(figsize=(8, 8))
     num_holes = len(world.holes) if world.holes is not None else 0
     plt.xlim(0, world.size[0])
@@ -221,18 +212,35 @@ if __name__ == "__main__":
     # holes = [(20, 20, 40, 40), (60, 60, 80, 80)]
     # holes = [(30, 30, 70, 70)]
     # holes = None
-    length = 25000
-    hole_locations = {0:None, 
-                1:[(30, 30, 70, 70)], 
-                2:[(10, 10, 45, 45), (55, 55, 90, 90)]}
-    for n_holes in [0,1,2]:
+    import matplotlib.pyplot as plt
+    import pickle
+    import os
+    from constants import TRAJ_PATH
+    from multiprocessing import Pool
+
+    def generate_and_save(args):
+        n_holes, n, world_size, length, hole_locations, step_size = args
         holes = hole_locations[n_holes]
-        step_size = 2
         world = World(world_size, holes, step_size)
-        # trace = random_walk(25000, world)
-        # trace, world = pickle.load(open(os.path.join(TRAJ_PATH, f"random_walk_{n_holes}holes.pkl"), "rb"))
         trace = random_walk(length, world, save=False, no_warnings=True)
-        pickle.dump((trace, world), open(os.path.join(TRAJ_PATH,f"random_walk_{n_holes}holes_{length}.pkl"), "wb"))
-        print(trace)
-        visualize_trajectory(world, trace, show=False, save=False)
-    plt.show()
+        os.makedirs(TRAJ_PATH, exist_ok=True)
+        out_path = os.path.join(TRAJ_PATH, f"random_walk_{n_holes}holes_{length}_n{n}.pkl")
+        with open(out_path, "wb") as f:
+            pickle.dump((trace, world), f)
+        # Optionally visualize (disabled by default)
+        # visualize_trajectory(world, trace, show=False, save=False)
+
+    length = 25000
+    step_size = 2
+    hole_locations = {
+        0: None,
+        1: [(30, 30, 70, 70)],
+        2: [(10, 10, 45, 45), (55, 55, 90, 90)]
+    }
+    jobs = []
+    for n_holes in [0, 1, 2]:
+        for n in range(10):
+            jobs.append((n_holes, n, world_size, length, hole_locations, step_size))
+    with Pool() as pool:
+        pool.map(generate_and_save, jobs)
+    print(f"Saved all trajectories to {TRAJ_PATH}")

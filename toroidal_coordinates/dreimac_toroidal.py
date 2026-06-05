@@ -37,7 +37,9 @@ def compute_toroidal_coords_world(num_holes: int, noisy_level: float | None = No
     
     if noisy_level:
         grid_rates = add_noise_1d(grid_rates, noisy_level, noisy_variance)
-
+    
+    # plt.plot(grid_rates[:10000, 0])
+    # plt.show()
     
     traj = pickle.load(open(traj_path, "rb"))[0]
     
@@ -47,13 +49,13 @@ def compute_toroidal_coords_world(num_holes: int, noisy_level: float | None = No
 
     ### Save
     filepath_npz = os.path.join(grid_path, f"toroidal_coords_dreimac{'_fullrange' if not cos_2pi else ''}{f'_{noisy_level}' if noisy_level else ''}.npz")
-#     np.savez_compressed(
-#         filepath_npz,
-#         coords=coords,
-#         times=times,
-#         traj=traj,
-#     )
-#     print("Saving toroidal coordinates in ", filepath_npz) 
+    np.savez_compressed(
+        filepath_npz,
+        coords=coords,
+        times=times,
+        traj=traj,
+    )
+    print("Saving toroidal coordinates in ", filepath_npz) 
 
 #     filepath_fig = os.path.join(grid_fig_path, f"toroidal_coords_dreimac{'_fullrange' if not cos_2pi else ''}.png")
 #     plt.savefig(filepath_fig, dpi=150)
@@ -63,6 +65,6 @@ def compute_toroidal_coords_world(num_holes: int, noisy_level: float | None = No
 if __name__ == "__main__":
     # compute_toroidal_coords_world(0)
     for i in range(3):
-        compute_toroidal_coords_world(i, cos_2pi=False)
+        compute_toroidal_coords_world(i, cos_2pi=True)
     
     plt.show()

@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA # type: ignore
 import sklearn.preprocessing # type: ignore
 
 sys.path.append('.')
-from Gardner_data_test.Gardner_utils import (
+from Gardner_data_test.utils import (
     sample_denoising,
     smooth_knn_dist,
     compute_membership_strengths,
@@ -72,8 +72,8 @@ def computeDistanceMatrix(
 
     return d
 
-def persistence_analysis_spikes(spikes: np.ndarray, maxdim: int = 2, dim: int = 6):
-    distance_matrix = computeDistanceMatrix(spikes, dim=dim)
+def persistence_analysis_spikes(spikes: np.ndarray, maxdim: int = 2, dim: int = 6, metric: str = "cosine"):
+    distance_matrix = computeDistanceMatrix(spikes, dim=dim, metric=metric)
     persistence = ripser(
         distance_matrix,
         maxdim=maxdim,
@@ -89,6 +89,10 @@ def persistence_analysis(result_path: str, maxdim: int = 2, dim: int = 6):
     """
     spikes = pickle.load(open(result_path, "rb")).T
     persistence = persistence_analysis_spikes(spikes, maxdim=maxdim, dim=dim)
+    # plot_barcode(persistence["dgms"])
+    # plot_diagrams(persistence["dgms"])
+    # plt.title(f"Persistence Diagram for {os.path.basename(result_path)} simulation")
+    # plt.savefig(os.path.join(os.path.dirname(result_path), 'simulation_homology.png'), dpi=300)
     
     return persistence
 
@@ -106,6 +110,11 @@ def trajectory_persistence_analysis(result_path: str, maxdim: int = 1):
         do_cocycles=True,
         distance_matrix=False,
     )
+    # note: the default metric that ripser uses is the Euclidean distance.
+    # plt.figure()
+    # plot_diagrams(persistence["dgms"])
+    # plt.title(f"Persistence Diagram of toroidal trajectory")
+    # plt.savefig(os.path.join(os.path.dirname(result_path), 'toroidal_trajectory_homology.png'), dpi=300)
     
     return persistence
 

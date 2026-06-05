@@ -14,10 +14,11 @@ from scipy.signal import correlate
 
 sys.path.append(".")
 from trajectory import World # need for loading trajectories
-from Gardner_data_test.Gardner_utils import (
+from Gardner_data_test.utils import (
     sample_denoising,
     smooth_knn_dist,
     compute_membership_strengths,
+    plot_barcode,
 )
 
 import matplotlib as mpl
