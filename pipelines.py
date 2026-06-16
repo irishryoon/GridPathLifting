@@ -69,12 +69,14 @@ def compare_lifted_pipeline(
     lifted_coord: np.ndarray,
     original_coord: np.ndarray,
     method: str = 'RANSAC',
+    world_size: float | None = None,
 ) -> tuple[np.ndarray, float]:
     """
     Compares lifted coordinates to original coordinates by applying a transformation and scoring the mismatch.
     Args:
         lifted_coord (np.ndarray): The coordinates to be transformed and compared. Should be in the shape (n1_time_steps, 2).
         original_coord (np.ndarray): The reference coordinates for comparison. Should be in the shape (n2_time_steps, 2).
+        world_size (float | None): The world size used to normalize the mismatch score. If None, it is inferred from the bounding box of original_coord.
     Returns:
         lifted_coord_transformed (np.ndarray): The transformed lifted coordinates.
         score (float): The mismatch score between the transformed lifted coordinates and the original coordinates.
@@ -82,7 +84,7 @@ def compare_lifted_pipeline(
     transform_mat = get_transform_mat(lifted_coord, original_coord, method=method)
     lifted_coord_transformed = apply_transform_mat(lifted_coord, transform_mat)
 
-    score = score_mismatch(lifted_coord_transformed, original_coord)
+    score = score_mismatch(lifted_coord_transformed, original_coord, world_size=world_size)
     print(f"Mismatch score: {score}")
     
     return lifted_coord_transformed, score
