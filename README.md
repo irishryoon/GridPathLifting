@@ -1,6 +1,8 @@
 # GridCellLifting
 
-This project aims to decode trajectories from spike train data of grid cells using topological data analysis (TDA) methods. It includes complete pipeline for decoding the data and implemented validations on both simulated and experimental data.
+This project aims to decode trajectories from spike train data of grid cells using topological data analysis (TDA) methods. It includes complete pipeline for decoding the data and implemented validations on both simulated and experimental data. 
+
+Paper: [arXiv](https://arxiv.org/abs/2510.16216)
 
 ## Table of Contents
 
@@ -100,9 +102,13 @@ To test the robustness of this pipeline, we added noise to the simulated grid ce
 
 [`lifting_error_cases/`](lifting_error_cases/) folder contains two .ipynb files that illustrate possible failures of the lifting algorithm.
 
-### 1D Data Test
+### 1D experimental data
 
-The lifting algorithm is tested on 1D data in [`Wen_data_test/`](Wen_data_test/) folder and [`Campbell_data_test/`](Campbell_data_test/) using grid cell data from Wen et al. (2024) and Campbell et al. (2021). The data is collected in a wheel running experiment.  Both `Wen_1d_data_test.ipynb` and `Campbell_1d_data_test.ipynb` apply the pipeline to the 1D data and successfully recovers the 1D trajectory.
+The lifting algorithm is tested on experimental data from 1-dimensional movement from [Wen et al](https://www.nature.com/articles/s41586-024-08034-3). The implementation is done in `example/1D_experimental_data.ipynb.`
+
+Prior to running the notebook, users must do the following:
+1. Download the dataset from [Mendeley Data](https://data.mendeley.com/datasets/rgtk6jygjc/1). 
+2. Update `WEN_DATA_PATH` within "constants.py".
 
 ### Gardner Data Test
 
