@@ -4,6 +4,8 @@ This project aims to decode trajectories from spike train data of grid cells usi
 
 Paper: [arXiv](https://arxiv.org/abs/2510.16216)
 
+For a quick demonstration of the method on datasets, run the three notebooks under "example".
+
 ## Table of Contents
 
 - [GridCellLifting](#gridcelllifting)
@@ -19,9 +21,6 @@ Paper: [arXiv](https://arxiv.org/abs/2510.16216)
     - [Epsilon computation](#epsilon-computation)
     - [Affine transformation \& Mismatch score](#affine-transformation--mismatch-score)
     - [Noise-adding simulation](#noise-adding-simulation)
-    - [Lifting error cases](#lifting-error-cases)
-    - [1D Data Test](#1d-data-test)
-    - [Gardner Data Test](#gardner-data-test)
   - [Authors](#authors)
   - [References](#references)
 
@@ -94,13 +93,9 @@ In [`affine_transformation/`](affine_transformation/) folder, `get_transform_mat
 
 `score_mismatch.py` computes the reconstruction error between two paths and is used to evaluate the performance of the lifting algorithm. The reconstruction error is defined as the mean Euclidean distance between the two paths, normalized by the size of the world. If not specified, the world size is computed as the maximum horizontal/vertical distance of path2.
 
-### Noise-adding simulation
+### Simulated data
 
-To test the robustness of this pipeline, we added noise to the simulated grid cell activity. In `add_noise.py` in [`noisy_data_test/`](noisy_data_test/) folder, we added Gaussian noise to the grid cell activity to simulate spontaneous neural firing. Testing is also implemented in the folder. The noise is added to the grid cell activity with a different parameters, and the lifting algorithm is applied to the noisy data.
-
-### Additional experiments
-
-Contains scripts used to run additional experiments that are reported in the SI. 
+The lifting algorithm is tested on simulated data. See `example/simulated_data.ipynb`
 
 ### 1D experimental data
 
@@ -110,7 +105,7 @@ Prior to running the notebook, users must do the following:
 1. Download the dataset from [Mendeley Data](https://data.mendeley.com/datasets/rgtk6jygjc/1). 
 2. Update `WEN_DATA_PATH` within "constants.py".
 
-### Gardner Data Test
+### 2D experimental data
 
 The lifting algorithm is tested on experimental data from 2-dimensional movement from [Gardner et al](https://www.nature.com/articles/s41586-021-04268-7). The implementation is done in `example/2D_experimental_data.ipynb.`
 
@@ -118,6 +113,14 @@ Prior to running the notebook, users must do the following:
 1. Download the dataset from [figshare](https://figshare.com/articles/dataset/Toroidal_topology_of_population_activity_in_grid_cells/16764508?file=35078602)
 2. Update `GARDNER_DATA_PATH` within "constants.py"
 
+
+### Noise in neural activity
+
+To test the robustness of this pipeline, we added noise to the simulated grid cell activity. In `add_noise.py` in [`noisy_data_test/`](noisy_data_test/) folder, we added Gaussian noise to the grid cell activity to simulate spontaneous neural firing. Testing is also implemented in the folder. The noise is added to the grid cell activity with a different parameters, and the lifting algorithm is applied to the noisy data.
+
+### Additional experiments
+
+Contains scripts used to run additional experiments that are reported in the SI. Users should first generate independent trajecotires (in the 1-hole world) using `generate_1hole_trajectories.py`
 
 ## Authors
 
