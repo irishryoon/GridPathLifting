@@ -112,7 +112,12 @@ Prior to running the notebook, users must do the following:
 
 ### Gardner Data Test
 
-The lifting algorithm is tested on 2D trajectory grid cell data in [`Gardner_data_test/`](gardner_data_test/) folder using grid cell data from Gardner et al. (2022). The data is collected in a 2D open field experiment. The lifted path is compared with the original trajectory to test the performance of the lifting algorithm.
+The lifting algorithm is tested on experimental data from 2-dimensional movement from [Gardner et al](https://www.nature.com/articles/s41586-021-04268-7). The implementation is done in `example/2D_experimental_data.ipynb.`
+
+Prior to running the notebook, users must do the following:
+1. Download the dataset from [figshare](https://figshare.com/articles/dataset/Toroidal_topology_of_population_activity_in_grid_cells/16764508?file=35078602)
+2. Update `GARDNER_DATA_PATH` within "constants.py"
+
 
 ## Authors
 
