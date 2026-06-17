@@ -98,9 +98,9 @@ In [`affine_transformation/`](affine_transformation/) folder, `get_transform_mat
 
 To test the robustness of this pipeline, we added noise to the simulated grid cell activity. In `add_noise.py` in [`noisy_data_test/`](noisy_data_test/) folder, we added Gaussian noise to the grid cell activity to simulate spontaneous neural firing. Testing is also implemented in the folder. The noise is added to the grid cell activity with a different parameters, and the lifting algorithm is applied to the noisy data.
 
-### Lifting error cases
+### Additional experiments
 
-[`lifting_error_cases/`](lifting_error_cases/) folder contains two .ipynb files that illustrate possible failures of the lifting algorithm.
+Contains scripts used to run additional experiments that are reported in the SI. 
 
 ### 1D experimental data
 
