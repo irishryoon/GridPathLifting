@@ -79,7 +79,8 @@ def visualize_tor_coords_x_traj(xx: np.ndarray, yy: np.ndarray, coords:np.ndarra
     yy = interp_arr(yy, coords.shape[0])
     
     fig, ax = plt.subplots(1, 2, figsize=(12, 6))
-    
+    fig.subplots_adjust(wspace=0.08)
+
     if cos_2pi:
         coords_color = [np.cos(coords[plot_times, 0]), np.cos(coords[plot_times, 1])]
     else:
@@ -103,7 +104,7 @@ def visualize_tor_coords_x_traj(xx: np.ndarray, yy: np.ndarray, coords:np.ndarra
     height_ax = pos.height
     height_cbar = height_ax * 0.95
     # Horizontal pad between ax[1] and colorbar.
-    pad = 0.02  
+    pad = 0.015
     x_cbar = pos.x1 + pad
     y_cbar = pos.y0 + (height_ax - height_cbar) / 2
 
@@ -160,28 +161,7 @@ def plot_toroidal_coordinates(xx: np.ndarray, yy: np.ndarray, coords:np.ndarray,
     if aspect_equal == True:
         ax[1].set_aspect('equal')
     
-    pos = ax[1].get_position()
-    
-    # Compute colorbar dimensions:
-    # Width: 1/3 of the scatter plot width.
-    width_ax = pos.width
-    width_cbar = width_ax * (1/10)
-    # Height: 80% of scatter plot height.
-    height_ax = pos.height
-    height_cbar = height_ax * 0.95
-    # Horizontal pad between ax[1] and colorbar.
-    pad = 0.02  
-    x_cbar = pos.x1 + pad
-    y_cbar = pos.y0 + (height_ax - height_cbar) / 2
-
-    # Add a new axis for the colorbar at the computed position.
-    cax = fig.add_axes([x_cbar, y_cbar, width_cbar, height_cbar]) # type: ignore
-   
-    cbar = fig.colorbar(mpl.cm.ScalarMappable(norm = mpl.colors.Normalize(vmin = 0, vmax = 2 * math.pi), cmap = "plasma"), 
-                        cax=cax, ticks=np.arange(0, 2*math.pi+0.001, math.pi), format=mticker.FixedFormatter(['0', r'$\pi$', r'$2\pi$']))
-    
-    cbar.set_ticks(np.arange(0, 2*math.pi+0.001, math.pi))
-    cbar.ax.tick_params(labelsize=25)
+    # Colorbar intentionally omitted for cleaner side-by-side panels.
 
 if __name__ == "__main__":
     for i in range(3):

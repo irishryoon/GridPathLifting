@@ -84,8 +84,8 @@ def compare_lifted_pipeline(
     transform_mat = get_transform_mat(lifted_coord, original_coord, method=method)
     lifted_coord_transformed = apply_transform_mat(lifted_coord, transform_mat)
 
-    score = score_mismatch(lifted_coord_transformed, original_coord, world_size=world_size)
-    print(f"Mismatch score: {score}")
+    score = score_mismatch(lifted_coord_transformed, original_coord, world_size = world_size)
+    print(f"Error: {score}")
     
     return lifted_coord_transformed, score
 

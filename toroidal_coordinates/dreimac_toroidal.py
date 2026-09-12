@@ -10,15 +10,19 @@ from toroidal_coordinates.compute_coord import interp_arr, visualize_tor_coords_
 from noisy_data_test.add_noise import add_noise_1d
 from constants import GRID_FIELDS_PATH, TRAJ_PATH, GRID_FIG_PATH
 
-def compute_toroidal_coords_dreimac(grid_rates: np.ndarray, standard_range: bool=True, distance_matrix: bool=False) -> tuple[np.ndarray, np.ndarray]:
-    
+def compute_toroidal_coords_dreimac(grid_rates: np.ndarray, standard_range: bool=True, distance_matrix: bool=False, return_PD: bool=False) -> tuple:
+
     cc = CircularCoords(grid_rates, 250, prime=47, distance_matrix=distance_matrix)
     coords = np.concatenate([
-        cc.get_coordinates(cocycle_idx=0, standard_range=standard_range)[:, np.newaxis], 
+        cc.get_coordinates(cocycle_idx=0, standard_range=standard_range)[:, np.newaxis],
         cc.get_coordinates(cocycle_idx=1, standard_range=standard_range)[:, np.newaxis]
     ], axis=1)
     times = np.arange(grid_rates.shape[0])
-    
+
+    if return_PD:
+        PDs = cc._dgms
+        return coords, times, PDs
+
     return coords, times
     
 def compute_toroidal_coords_world(num_holes: int, noisy_level: float | None = None, noisy_variance: float = 50, cos_2pi: bool = True) -> None:

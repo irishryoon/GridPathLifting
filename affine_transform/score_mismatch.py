@@ -28,9 +28,9 @@ def score_mismatch(path1: np.ndarray, path2: np.ndarray, world_size: float | Non
         
         path2 = interpolate_2d_along_axis_0(path2, path1.shape[0])
     
-    if world_size is None:
-        world_size = np.max([path2[:, 0].max() - path2[:, 0].min(), path2[:, 1].max() - path2[:, 1].min()])
-    
+    if world_size is None: # world size is inferred from path2
+        world_size = float(np.max([path2[:, 0].max() - path2[:, 0].min(), path2[:, 1].max() - path2[:, 1].min()]))
+
     return np.mean(np.linalg.norm(path1 - path2, axis=1)) / world_size
 
 

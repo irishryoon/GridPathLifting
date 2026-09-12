@@ -88,7 +88,9 @@ def Gardner_persistence(sspikes: np.ndarray, maxdim: int = 1, metric: str = "cos
 def Gardner_coord(
     sspikes: np.ndarray,
     metric: str = "cosine",
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    return_PD: bool = False,
+    save_path: str | None = None,
+) -> tuple:
     """
     Calculates the toroidal coordinates using the Gardner method.
 
@@ -96,12 +98,16 @@ def Gardner_coord(
         sspikes (numpy.ndarray): Spike data matrix of shape (num_times, num_neurons).
         metric (str): Distance metric used during denoising and kNN graph
             construction. Typically ``"cosine"`` or ``"euclidean"``.
+        return_PD (bool): If True, also return the persistence diagrams.
+        save_path (str | None): Optional path to save the persistence diagram
+            and related artifacts as a .npz archive.
 
     Returns:
         numpy.ndarray: The toroidal coordinates.
         numpy.ndarray: The corresponding times.
         numpy.ndarray: The centcosall matrix.
         numpy.ndarray: The centsinall matrix.
+        If return_PD is True, also returns the persistence diagrams ("diagrams").
     """
     # bRoll = False
     dim = 6
@@ -224,8 +230,27 @@ def Gardner_coord(
     #                     times_box = times_box, centcosall = centcosall, centsinall = centsinall)
     
     
-    # np.savez_compressed('coords.npz', coords=coordsbox, times=times_box, xx=xx, yy=yy, centcosall=centcosall, centsinall=centsinall)
-    return coordsbox, times_box, centcosall, centsinall
+    if save_path is not None:
+        save_dir = os.path.dirname(save_path)
+        if save_dir:
+            os.makedirs(save_dir, exist_ok=True)
+        persistence_payload = {
+            "dgms": np.asarray(diagrams, dtype=object),
+            "cocycles": np.asarray(cocycles, dtype=object),
+            "births1": births1,
+            "deaths1": deaths1,
+            "lives1": lives1,
+            "coords": coordsbox,
+            "times": times_box,
+            "centcosall": centcosall,
+            "centsinall": centsinall,
+        }
+        np.savez_compressed(save_path, **persistence_payload)
+
+    if return_PD:
+        return coordsbox, times_box, centcosall, centsinall, diagrams
+    else:
+        return coordsbox, times_box, centcosall, centsinall
 
 if __name__ == '__main__':
     folder = GARDNER_DATA_PATH
