@@ -19,8 +19,12 @@ For a quick demonstration of the method on datasets, run the three notebooks und
     - [Toroidal coordinates](#toroidal-coordinates)
     - [Lifting algorithm](#lifting-algorithm)
     - [Epsilon computation](#epsilon-computation)
-    - [Affine transformation \& Mismatch score](#affine-transformation--mismatch-score)
-    - [Noise-adding simulation](#noise-adding-simulation)
+    - [Affine transformation \& Reconstruction error](#affine-transformation-reconstruction-error)
+    - [Simulated data](#simulated-data)
+    - [1D experimental data](#1d-experimental-data)
+    - [2D experimental data](#2d-experimental-data)
+    - [Noise in neural activity](#noise-in-neural-activity)
+    - [Additional experiments](#additional-experiments)
   - [Authors](#authors)
   - [References](#references)
   - [License](#license)
@@ -29,7 +33,7 @@ For a quick demonstration of the method on datasets, run the three notebooks und
 
 In the development of the repository, `Python 3.11` is used, and the environment pins that version.
 
-The paths for accessing data and the figures are stored in `constants.py`. Before running the code, please create a file named `DATA_ROOT.py` and define two variables: `DATA_ROOT` (for accessing data and cache files) and `REPO_PATH` (for saving figures). For direct running in the current environment, it can be set as:
+The paths for accessing data and the figures are stored in `constants.py`. Before running the code, please edit the file named `ROOT_PATH.py` and define two variables: `DATA_ROOT` (for accessing data and cache files) and `REPO_PATH` (for saving figures). For direct running in the current environment, it can be set as:
 
 ```python
 DATA_ROOT = '.'
@@ -52,7 +56,7 @@ source .venv/bin/activate
 
 ## Components
 
-`pipeline.py` is provided for pipeline decoding of the grid cell activity.
+`pipelines.py` is provided for pipeline decoding of the grid cell activity.
 
 ### Trajectory simulation
 
@@ -85,11 +89,11 @@ Three versions of the lifting algorithm are implemented:
 
 ### Epsilon computation
 
-Our study offers a method to determine the proper *epsilon* value for the lifting algorithm. In `epsilon.py`, the *epsilon* value is computed to include the majority of the points that potentially needs to be lifted. more details are explained in the paper.
+Our study offers a method to determine the proper *epsilon* value for the lifting algorithm. In `toroidal_coordinates/epsilon.py`, the *epsilon* value is computed to include the majority of the points that potentially needs to be lifted. more details are explained in the paper.
 
 ### Affine transformation & Reconstruction error
 
-In [`affine_transformation/`](affine_transformation/) folder, `get_transform_mat.py` computes the affine transformation matrix between two paths using `estimateAffine2D` function from the OpenCV package. The affine transformation is used to align the lifted path with the original trajectory.
+In [`affine_transform/`](affine_transform/) folder, `get_transform_mat.py` computes the affine transformation matrix between two paths using `estimateAffine2D` function from the OpenCV package. The affine transformation is used to align the lifted path with the original trajectory.
 
 `score_mismatch.py` computes the reconstruction error between two paths and is used to evaluate the performance of the lifting algorithm. The reconstruction error is defined as the mean Euclidean distance between the two paths, normalized by the size of the world. If not specified, the world size is computed as the maximum horizontal/vertical distance of path2.
 
