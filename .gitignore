@@ -23,6 +23,7 @@ env.bak/
 env1/
 env2/
 .env
+.venv/
 
 # IDE
 .idea/

@@ -27,7 +27,7 @@ For a quick demonstration of the method on datasets, run the three notebooks und
 
 ## Setup
 
-In the development of the repository, `Python 3.11` is used, but in theory any version of `Python 3.8+` should work.
+In the development of the repository, `Python 3.11` is used, and the environment pins that version.
 
 The paths for accessing data and the figures are stored in `constants.py`. Before running the code, please create a file named `DATA_ROOT.py` and define two variables: `DATA_ROOT` (for accessing data and cache files) and `REPO_PATH` (for saving figures). For direct running in the current environment, it can be set as:
 
@@ -38,17 +38,16 @@ REPO_PATH = '.'
 
 ### Environment Installation
 
-This project uses Conda for environment management. To install the required dependencies, run:
+Dependencies are managed with [uv](https://docs.astral.sh/uv/):
 
 ```bash
-conda env create -f requirements.yml
-conda activate gridpathlifting
+uv sync
 ```
 
-If the environment already exists and you need to update it, run:
+This creates a `.venv` in the repository root with the exact versions recorded in `uv.lock`. Activate it with:
 
 ```bash
-conda env update --file requirements.yml
+source .venv/bin/activate
 ```
 
 ## Components
