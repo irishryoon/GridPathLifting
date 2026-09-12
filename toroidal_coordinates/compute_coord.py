@@ -3,9 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import ripser # type: ignore
 import pickle
-import math
-import matplotlib.ticker as mticker
-import matplotlib as mpl
 
 sys.path.append(".")
 from trajectory import World

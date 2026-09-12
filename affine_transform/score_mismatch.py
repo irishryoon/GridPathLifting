@@ -6,7 +6,7 @@ from scipy.spatial.distance import cdist # type: ignore
 sys.path.append('.')
 from trajectory import World
 from affine_transform.get_transform_mat import get_transform_mat, apply_transform_mat
-from Gardner_data_test.Gardner_lifting_test import interpolate_2d_along_axis_0
+from helper_scripts.Gardner_lifting_test import interpolate_2d_along_axis_0
 from constants import TRAJ_PATH, GRID_FIELDS_PATH
 
 

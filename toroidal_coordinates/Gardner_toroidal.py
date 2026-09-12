@@ -7,7 +7,7 @@ from scipy.spatial.distance import pdist, squareform # type: ignore
 from scipy.sparse import coo_matrix # type: ignore
 
 sys.path.append('.')
-from Gardner_data_test.Gardner_utils import (
+from helper_scripts.Gardner_utils import (
     pca,
     sample_denoising,
     smooth_knn_dist,

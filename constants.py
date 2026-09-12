@@ -20,7 +20,6 @@ SUBTRACT_GAUSSIAN_DATA_PATH = os.path.join(DATA_ROOT, 'noisy_data_test', 'subtra
 SUBTRACT_GAUSSIAN_FIG_PATH = os.path.join(REPO_PATH, 'noisy_data_test', 'subtract_gaussian')
 
 WEN_DATA_PATH = os.path.join(DATA_ROOT, 'Data', 'Wen_et_al_data')
-WEN_DATA_FIG_PATH = os.path.join(REPO_PATH, 'Wen_data_test', 'figures')
 
 GIOMOCO_DATA_PATH = os.path.join(DATA_ROOT, 'Data', 'giomoco_data')
 
@@ -28,8 +27,6 @@ AFFINE_TRANSFORM_PATH = os.path.join(DATA_ROOT, 'affine_transform')
 AFFINE_TRANSFORM_FIG_PATH = os.path.join(REPO_PATH, 'affine_transform')
 
 TRAJ_PATH = os.path.join(REPO_PATH, 'trajectory')
-
-GARDNER_TEST_FIG_PATH = os.path.join(REPO_PATH, 'Gardner_data_test', 'figures')
 
 MANU_FIG_MATERIAL_PATH = os.path.join(REPO_PATH, '_generate_figs', 'figs')
 MANU_FIG_CACHE_PATH = os.path.join(DATA_ROOT, '_generate_figs', '.cache')

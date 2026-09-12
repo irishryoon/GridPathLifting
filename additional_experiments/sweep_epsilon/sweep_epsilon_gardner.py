@@ -17,7 +17,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 
 sys.path.append(".")
 from constants import GARDNER_DATA_PATH
-from helper_scripts.utils import get_spikes
+from helper_scripts.Gardner_utils import get_spikes
 from toroidal_coordinates.Gardner_toroidal import Gardner_coord
 from toroidal_coordinates.toroidal_lifting import toroidal_lifting_distance, toroidal_lifting_distance_upgrade
 from affine_transform.get_transform_mat import get_transform_mat, apply_transform_mat

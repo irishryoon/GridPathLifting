@@ -25,7 +25,7 @@ from toroidal_coordinates.Gardner_toroidal import Gardner_coord
 from toroidal_coordinates.dreimac_toroidal import compute_toroidal_coords_dreimac
 from pipelines import compare_lifted_pipeline, segmental_compare_pipeline
 from constants import GARDNER_DATA_PATH
-from helper_scripts.utils import get_spikes
+from helper_scripts.Gardner_utils import get_spikes
 from ROOT_PATH import DATA_ROOT
 from grid_cell_simulation import preprocess
 from trajectory import World  # noqa: F401 — required for unpickling trajectory files

@@ -60,7 +60,7 @@ Random walk in an enclosed space is simulated in `trajectory.py`. The world can 
 
 ### Grid cell simulation
 
-Grid cell simulation is adopted from *Gardner et al., 2022*. Grid cells are simulated in `grid_cell_simulation.py` using a continuous attractor network (CAN) model. `utils.py` contains helper functions from the original studies.
+Grid cell simulation is adopted from *Gardner et al., 2022*. Grid cells are simulated in `grid_cell_simulation.py` using a continuous attractor network (CAN) model. `helper_scripts/Gardner_utils.py` contains helper functions from the original studies.
 
 ### Persistent homology
 

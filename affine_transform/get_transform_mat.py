@@ -6,7 +6,7 @@ import pickle
 
 sys.path.append(".")
 from trajectory import World
-from Gardner_data_test.Gardner_lifting_test import interpolate_2d_along_axis_0
+from helper_scripts.Gardner_lifting_test import interpolate_2d_along_axis_0
 from constants import GRID_FIELDS_PATH, TRAJ_PATH
 
 def apply_transform_mat(path: np.ndarray, t_mat: np.ndarray) -> np.ndarray:
