@@ -34,8 +34,8 @@ from trajectory import World  # noqa: F401 — required for unpickling trajector
 N_TRAJECTORIES = 5
 SEG_LEN = 10000
 CACHE_DIR = os.path.join(DATA_ROOT, "revision_cache")
-TRAJ_DIR = "/data/hyoon/GridDecode/trajectory"
-GRID_DIR = "/data/hyoon/GridDecode/grid_fields"
+TRAJ_DIR = "/path/to/data/trajectory"
+GRID_DIR = "/path/to/data/grid_fields"
 LIFTING_CSV = "revision/sweep_trajectory/random_traj_results/mismatch_scores.csv"
 
 GARDNER_RAT_NAME = "R"

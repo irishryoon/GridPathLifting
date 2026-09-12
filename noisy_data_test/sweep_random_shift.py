@@ -40,8 +40,8 @@ HOLES = [(30, 30, 70, 70)]  # 1-hole world
 STEP_SIZE = 2  # fixed step size
 TRAJ_LENGTH = 25000
 
-TRAJ_DIR = "/data/hyoon/GridDecode/trajectory"
-GRID_DIR = "/data/hyoon/GridDecode/grid_fields"
+TRAJ_DIR = "/path/to/data/trajectory"
+GRID_DIR = "/path/to/data/grid_fields"
 
 
 # ---------------------------------------------------------------------------

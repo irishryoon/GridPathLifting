@@ -29,8 +29,8 @@ from trajectory import World
 
 SEG_LEN = 10000
 CACHE_DIR = os.path.join(DATA_ROOT, "revision_cache")
-TRAJ_DIR = "/data/hyoon/GridDecode/trajectory"
-GRID_DIR = "/data/hyoon/GridDecode/grid_fields"
+TRAJ_DIR = "/path/to/data/trajectory"
+GRID_DIR = "/path/to/data/grid_fields"
 
 
 # ---------------------------------------------------------------------------

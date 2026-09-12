@@ -26,8 +26,8 @@ from revision.csv_helpers import init_csv as _init_csv, append_csv as _append_cs
 
 
 SEG_LEN = 10000
-TRAJ_DIR = "/data/hyoon/GridDecode/trajectory"
-GRID_DIR = "/data/hyoon/GridDecode/grid_fields"
+TRAJ_DIR = "/path/to/data/trajectory"
+GRID_DIR = "/path/to/data/grid_fields"
 SAVE_DIR = "revision/sweep_neuron/sweep_neuron_results"
 
 
