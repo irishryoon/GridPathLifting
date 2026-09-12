@@ -23,6 +23,7 @@ For a quick demonstration of the method on datasets, run the three notebooks und
     - [Noise-adding simulation](#noise-adding-simulation)
   - [Authors](#authors)
   - [References](#references)
+  - [License](#license)
 
 ## Setup
 
@@ -132,3 +133,9 @@ Contains scripts used to run additional experiments that are reported in the SI.
 - Gardner, R. J., Hermansen, E., Pachitariu, M., Burak, Y., Baas, N. A., Dunn, B. A., ... & Moser, E. I. (2022). Toroidal topology of population activity in grid cells. *Nature, 602*(7895), 123-128.
 - Wen, J. H., Sorscher, B., Aery Jones, E. A., Ganguli, S., & Giocomo, L. M. (2024). One-shot entorhinal maps enable flexible navigation in novel environments. *Nature, 635*(8040), 943-950.
 - Campbell, M. G., Attinger, A., Ocko, S. A., Ganguli, S., & Giocomo, L. M. (2021). Distance-tuned neurons drive specialized path integration calculations in medial entorhinal cortex. Cell reports, 36(10).
+
+## License
+
+This project is licensed under the GNU General Public License v3.0. See [`LICENSE`](LICENSE) for the full text.
+
+This repository includes code from other studies. `helper_scripts/Gardner_utils.py` is a copy of `utils.py` from the [GridCellTorus](https://github.com/erikher/GridCellTorus) repository accompanying Gardner et al. (2022), which is licensed under GPL-3.0; this is the reason the present repository is also distributed under GPL-3.0. `helper_scripts/Wen_spectral_analysis.py` is taken from the [mec-rapid-learning](https://github.com/GiocomoLab/mec-rapid-learning) repository accompanying Wen et al. (2024).
