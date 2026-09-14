@@ -27,7 +27,7 @@ sys.path.append(".")
 from constants import GARDNER_DATA_PATH
 from helper_scripts.Gardner_utils import get_spikes
 from persistence_homology import persistence_analysis_spikes
-from revision.torus_detection import count_pd_outliers, is_torus
+from additional_experiments.torus_detection import count_pd_outliers, is_torus
 
 
 # ---------------------------------------------------------------------------

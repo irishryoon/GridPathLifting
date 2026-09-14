@@ -25,7 +25,7 @@ import concurrent.futures as cf
 
 sys.path.append(".")
 from persistence_homology import persistence_analysis_spikes
-from revision.torus_detection import count_pd_outliers, is_torus
+from additional_experiments.torus_detection import count_pd_outliers, is_torus
 from ROOT_PATH import DATA_ROOT
 
 

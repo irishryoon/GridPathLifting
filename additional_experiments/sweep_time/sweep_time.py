@@ -22,7 +22,7 @@ from pipelines import recover_traj_pipeline, compare_lifted_pipeline, segmental_
 from ROOT_PATH import DATA_ROOT
 from grid_cell_simulation import preprocess
 from trajectory import World  # noqa: F401 — required for unpickling trajectory files
-from revision.csv_helpers import init_csv as _init_csv, append_csv as _append_csv, load_completed as _load_completed
+from additional_experiments.csv_helpers import init_csv as _init_csv, append_csv as _append_csv, load_completed as _load_completed
 
 
 SEG_LEN = 10000

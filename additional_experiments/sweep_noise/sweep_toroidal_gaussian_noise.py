@@ -27,7 +27,7 @@ from toroidal_coordinates.compute_coord import plot_toroidal_coordinates
 from toroidal_coordinates.toroidal_lifting import toroidal_lifting_distance_upgrade
 from constants import GRID_FIELDS_PATH
 from ROOT_PATH import DATA_ROOT
-from revision.csv_helpers import init_csv as _init_csv, append_csv as _append_csv, load_completed as _load_completed
+from additional_experiments.csv_helpers import init_csv as _init_csv, append_csv as _append_csv, load_completed as _load_completed
 
 
 # ---------------------------------------------------------------------------

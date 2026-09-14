@@ -21,7 +21,7 @@ sys.path.append(".")
 from trajectory import random_walk, World
 from grid_cell_simulation import preprocess, simulation
 from pipelines import recover_traj_pipeline, compare_lifted_pipeline, segmental_compare_pipeline
-from revision.csv_helpers import init_csv as _init_csv, append_csv as _append_csv, load_completed as _load_completed
+from additional_experiments.csv_helpers import init_csv as _init_csv, append_csv as _append_csv, load_completed as _load_completed
 
 
 WORLD_SIZE = (100, 100)
